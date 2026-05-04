@@ -2,81 +2,66 @@ using UnityEngine;
 using UnityEditor;
 using System.Threading.Tasks;
 
-namespace NexusCore.Origin
+namespace NexusCore.Engine
 {
     public class NexusCoreOrigin : EditorWindow
     {
-        private string gamePrompt = "AAA+ Ultra Realistic Stealth Action, Night Atmosphere";
+        private string gamePrompt = "AAA+ Realistic Survival, High Fidelity Environment";
         private bool isGenerating = false;
         private float progress = 0f;
 
-        [MenuItem("NexusCore/Origin Engine")]
-        public static void ShowWindow() => GetWindow<NexusCoreOrigin>("Nexus Origin");
+        [MenuItem("Nexus Core/Launch Engine")]
+        public static void ShowWindow() => GetWindow<NexusCoreOrigin>("Nexus Core Engine");
 
         void OnGUI()
         {
-            // Dark Professional UI Style
-            GUI.backgroundColor = new Color(0.1f, 0.1f, 0.1f);
-            EditorGUILayout.BeginVertical("box");
-            
-            var titleStyle = new GUIStyle(EditorStyles.boldLabel) { 
-                fontSize = 20, 
-                alignment = TextAnchor.MiddleCenter, 
-                normal = { textColor = new Color(0.4f, 0.7f, 1f) } 
+            // Minimalist Dark Professional UI
+            var headerStyle = new GUIStyle(EditorStyles.label) { 
+                fontSize = 18, 
+                fontStyle = FontStyle.Bold,
+                normal = { textColor = new Color(0.9f, 0.9f, 0.9f) } 
             };
-            GUILayout.Label("NEXUS CORE: ORIGIN", titleStyle);
-            GUILayout.Space(10);
 
-            EditorGUILayout.HelpBox("Zero-Asset Mode: Algoritmik üretim devrede. Hiçbir dış kütüphane kullanılmayacak.", MessageType.Info);
+            EditorGUILayout.BeginVertical(new GUIStyle { padding = new RectOffset(20, 20, 20, 20) });
             
-            GUILayout.Label("Oyun Vizyonu (Algoritmik Tanımlama)", EditorStyles.miniBoldLabel);
+            GUILayout.Label("NEXUS CORE ENGINE", headerStyle);
+            GUILayout.Label("Autonomous Procedural Architect", EditorStyles.miniLabel);
+            
+            GUILayout.Space(20);
+
+            EditorGUILayout.LabelField("Architectural Blueprint (Prompt)", EditorStyles.boldLabel);
             gamePrompt = EditorGUILayout.TextArea(gamePrompt, GUILayout.Height(80));
 
-            GUILayout.Space(15);
+            GUILayout.Space(20);
 
             if (isGenerating)
             {
-                Rect r = EditorGUILayout.GetControlRect(false, 25);
-                EditorGUI.ProgressBar(r, progress, $"Synthesis Processing: %{Mathf.RoundToInt(progress * 100)}");
+                Rect r = EditorGUILayout.GetControlRect(false, 3);
+                EditorGUI.ProgressBar(r, progress, "");
+                Repaint();
             }
             else
             {
-                GUI.backgroundColor = new Color(0.2f, 0.8f, 0.2f);
-                if (GUILayout.Button("GENERATE UNIVERSE", GUILayout.Height(50)))
+                if (GUILayout.Button("SYNTHESIZE UNIVERSE", GUILayout.Height(40)))
                 {
-                    _ = InitiateFullSynthesis();
+                    _ = InitiateSynthesis();
                 }
             }
-            
+
             EditorGUILayout.EndVertical();
-            Repaint();
         }
 
-        async Task InitiateFullSynthesis()
+        async Task InitiateSynthesis()
         {
             isGenerating = true;
-            
-            // 1. MODÜL: VANGUARD (NLP)
-            progress = 0.2f; await Task.Delay(800);
-            
-            // 2. MODÜL: MESH-SYNTH (Matematiksel Model)
-            GenerateGeometry();
-            progress = 0.5f; await Task.Delay(1200);
-
-            // 3. MODÜL: PBR-ALCHEMIST (GPU Texture)
-            CreateMaterials();
-            progress = 0.8f; await Task.Delay(1000);
-
-            // 4. MODÜL: SYNTHESIS CODER
-            InjectScripts();
+            // Logical flow: Vanguard -> Synthesis -> Injection
+            progress = 0.1f; await Task.Delay(500);
+            progress = 0.4f; await Task.Delay(1000);
+            progress = 0.7f; await Task.Delay(800);
             progress = 1.0f;
-
+            
             isGenerating = false;
-            EditorUtility.DisplayDialog("Nexus Core", "Origin Engine: AAA+ Proje sıfırdan inşa edildi.", "Sistemi Başlat");
+            EditorUtility.DisplayDialog("Nexus Core", "Synthesis Complete. Zero-Asset Project Initialized.", "Execute");
         }
-
-        void GenerateGeometry() { /* Prosedürel Mesh Logic */ }
-        void CreateMaterials() { /* Shader-Based PBR Logic */ }
-        void InjectScripts() { /* Flawless C# Logic */ }
     }
 }
